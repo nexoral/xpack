@@ -35,6 +35,12 @@ curl -fsSL https://raw.githubusercontent.com/nexoral/xpack/main/Scripts/installe
 
 	./bin/xpack build --input ./myapp.bin --name myapp --version 1.0.0 --formats deb,rpm
 
+Or run xpack directly (non-interactive) specifying input, arch and version:
+
+```bash
+./bin/xpack -i ./bin -arch amd64 -v 1.1.1
+```
+
 3. Find output packages under `dist/` (or the path shown by the CLI).
 
 See `INSTALLATION.md` and `LEARN.md` for more details and advanced usage examples.

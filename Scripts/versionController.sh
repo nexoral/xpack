@@ -94,14 +94,16 @@ suffix=$(echo "$version_type" | tr '[:upper:]' '[:lower:]')
 echo "${new_version}-${suffix}" >"$(dirname "$0")/../VERSION"
 echo "Local version updated to ${new_version}-${suffix}"
 
-# Update static version in flagHandler.go and Banner.go
-flagHandler_go="$(dirname "$0")/../src/Core/main.go"
-sed -i "s|^\([[:space:]]*\)VERSION :=.*|\1VERSION := \"${new_version}-${suffix}\"|" "$flagHandler_go"
 
-banner_go="$(dirname "$0")/../src/base/Banner.go"
-sed -i "s|^\([[:space:]]*\)const Version =.*|\1const Version = \"${new_version}-${suffix}\"|" "$banner_go"
+# Update static version in main.go (var VERSION) and Banner.go (const Version)
+main_go="$(dirname "$0")/../src/Core/main.go"
+# Replace lines like: var VERSION = "..."
+sed -i "s|^\([[:space:]]*\)var VERSION = .*|\1var VERSION = \"${new_version}-${suffix}\"|" "$main_go"
 
-echo "Updated flagHandler.go and Banner.go with new version."
+banner_go="$(dirname "$0")/../src/base/banner.go"
+sed -i "s|^\([[:space:]]*\)const Version = .*|\1const Version = \"${new_version}-${suffix}\"|" "$banner_go"
+
+echo "Updated main.go and banner.go with new version."
 
 # Update version in README.md installation URLs
 readme_file="$(dirname "$0")/../README.md"

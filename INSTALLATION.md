@@ -61,6 +61,12 @@ Using in CI
 
 The scripts are written to be CI-friendly: set inputs via environment variables and run the scripts in a container or runner to produce artifacts. Keep artifacts under `dist/` and upload as CI job artifacts.
 
+Non-interactive example (specify version via -v):
+
+```bash
+./bin/xpack -i ./bin -arch amd64 -v 1.1.1
+```
+
 Uninstall
 
 Remove the installed binary or package via the platform package manager or by removing `/usr/local/bin/xpack` if installed manually.
