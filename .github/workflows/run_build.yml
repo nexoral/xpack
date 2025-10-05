@@ -1,0 +1,22 @@
+name: Run Shell Script on main branch
+
+on:
+  push:
+    branches:
+      - main  # Only trigger on push to main branch
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🧪 Run shell script
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}  # 👈 Pass the secret here
+          REPO: ${{ secrets.GIT_REPOSITORY }}  # 👈 Pass the repository name
+        run: |
+          chmod +x ./Scripts/release.sh
+          ./Scripts/release.sh
