@@ -15,7 +15,7 @@ import (
 )
 
 // var VERSION is updated by Scripts/versionController.sh
-var VERSION = "1.1.2-stable"
+var VERSION = "1.2.3-stable"
 
 // readLineRaw reads interactive input from terminal in raw mode, supporting Tab completion
 func readLineRaw(promptText, defaultVal string) (string, error) {
@@ -311,7 +311,14 @@ func main() {
 	}
 
 	// infer app name from binary filename
-	appName := filepath.Base(inputPath)
+	var appName string
+	defaultCandidate := filepath.Base(inputPath)
+	 v, _ := readLineRaw("Application name for this package", filepath.Base(inputPath))
+		if v != "" {
+					appName = v
+				} else {
+					appName = defaultCandidate
+				}
 	// remove extension
 	appName = strings.TrimSuffix(appName, filepath.Ext(appName))
 
