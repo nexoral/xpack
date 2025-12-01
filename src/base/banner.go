@@ -5,7 +5,7 @@ import (
 )
 
 // const Version is kept so external scripts can update it via sed
-const Version = "1.2.4-stable"
+const Version = "1.2.5-stable"
 
 // PrintBanner prints a simple welcome banner. Version may be empty.
 func PrintBanner(version string) {
