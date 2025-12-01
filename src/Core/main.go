@@ -15,7 +15,7 @@ import (
 )
 
 // var VERSION is updated by Scripts/versionController.sh
-var VERSION = "1.2.5-stable"
+var VERSION = "2.2.5-stable"
 
 // readLineRaw reads interactive input from terminal in raw mode, supporting Tab completion
 func readLineRaw(promptText, defaultVal string) (string, error) {
@@ -252,6 +252,7 @@ func main() {
 	inputFlag := flag.String("i", "", "relative path to input binary")
 	archFlag := flag.String("arch", "", "target architecture (amd64, arm64, i386)")
 	verFlag := flag.String("v", "", "version string for the package (e.g. 1.1.1)")
+	appFlag := flag.String("app", "", "application name for the package")
 	flag.Parse()
 
 	// show banner
@@ -310,17 +311,23 @@ func main() {
 		os.Exit(1)
 	}
 
-	// infer app name from binary filename
+	// determine app name: use flag if provided, otherwise prompt interactively
 	var appName string
-	defaultCandidate := filepath.Base(inputPath)
-	 v, _ := readLineRaw("Application name for this package", filepath.Base(inputPath))
+	if *appFlag != "" {
+		appName = *appFlag
+	} else {
+		// infer default from binary filename
+		defaultCandidate := filepath.Base(inputPath)
+		// remove extension from default
+		defaultCandidate = strings.TrimSuffix(defaultCandidate, filepath.Ext(defaultCandidate))
+
+		v, _ := readLineRaw("Application name for this package", defaultCandidate)
 		if v != "" {
-					appName = v
-				} else {
-					appName = defaultCandidate
-				}
-	// remove extension
-	appName = strings.TrimSuffix(appName, filepath.Ext(appName))
+			appName = v
+		} else {
+			appName = defaultCandidate
+		}
+	}
 
 	// determine package version:
 	// - if -v provided, use it
