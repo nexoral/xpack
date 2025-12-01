@@ -15,7 +15,7 @@ import (
 )
 
 // var VERSION is updated by Scripts/versionController.sh
-var VERSION = "1.2.4-stable"
+var VERSION = "1.2.5-stable"
 
 // readLineRaw reads interactive input from terminal in raw mode, supporting Tab completion
 func readLineRaw(promptText, defaultVal string) (string, error) {
