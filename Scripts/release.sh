@@ -15,8 +15,8 @@ echo "🔨 Binary Building completed of $APP_NAME version $VERSION for $ARCH"
 ./Scripts/PackageBuilder.sh
 echo "📦 Package Building completed of $APP_NAME version $VERSION for $ARCH"
 
-# collect all debs for this version
-DEB_FILES=(./Packages/${APP_NAME}_${VERSION}_*) # to collect all files
+# collect all packages for this version from dist folder
+DEB_FILES=(./dist/${APP_NAME}_${VERSION}_*) # to collect all files (.deb and .tar.gz)
 
 TAG="v$VERSION"
 COMMIT_HASH=$(git rev-parse HEAD)
@@ -32,9 +32,9 @@ if [ ! -f "$VERSION_FILE" ]; then
   exit 1
 fi
 
-# ensure we have at least one .deb
+# ensure we have at least one package file
 if [ ${#DEB_FILES[@]} -eq 0 ]; then
-  echo "❌ No .deb files found for version $VERSION in Packages/"
+  echo "❌ No package files found for version $VERSION in dist/"
   exit 1
 fi
 
@@ -74,7 +74,7 @@ gh release create "$TAG" "${DEB_FILES[@]}" \
 📝 Message:
 $COMMIT_MSG"
 
-echo "✅ GitHub release published with .deb assets"
+echo "✅ GitHub release published with package assets (.deb and .tar.gz)"
 
 # --- Cleanup old releases, keep only latest two ---
 echo "🗑️ Cleaning up old releases, retaining only latest two"
