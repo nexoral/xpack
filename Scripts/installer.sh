@@ -7,7 +7,7 @@ ARCH=$(dpkg --print-architecture)
 
 echo "Detected architecture: $ARCH"
 
-VERSION="2.2.6-stable"
+VERSION="2.2.7-stable"
 
 if [[ "$ARCH" == "amd64" ]]; then
   PKG="xpack_${VERSION}_amd64.deb"

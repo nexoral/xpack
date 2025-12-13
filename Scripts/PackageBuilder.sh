@@ -20,22 +20,11 @@ if [ ! -f "$BINARY_PATH" ]; then
   exit 1
 fi
 
-# === Install xpack ===
-echo "📦 Installing xpack..."
-curl -fsSL https://raw.githubusercontent.com/nexoral/xpack/main/Scripts/installer.sh | sudo bash -
-
-if [ $? -ne 0 ]; then
-  echo "❌ Failed to install xpack"
-  exit 1
-fi
-
-echo "✅ xpack installed successfully"
-
 # === Build packages for each architecture ===
 for ARCH in "${AVAILABLE_ARCHITECTURES[@]}"; do
   echo "🔨 Building packages for architecture: $ARCH"
 
-  xpack -i "$BINARY_PATH" -app "$APP_NAME" -arch "$ARCH" -v "$VERSION"
+  "$BINARY_PATH" -i "$BINARY_PATH" -app "$APP_NAME" -arch "$ARCH" -v "$VERSION"
 
   if [ $? -ne 0 ]; then
     echo "❌ Failed to build packages for architecture: $ARCH"
