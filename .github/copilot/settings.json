@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "project": {
+    "name": "xpack",
+    "type": "CLI Tool",
+    "language": "Go"
+  },
+  "build": {
+    "command": "go build -o xpack src/Core/main.go",
+    "required": true
+  },
+  "test": {
+    "command": "go test ./...",
+    "required": true
+  },
+  "instructions": [
+    "Reproducible builds: same input = same output",
+    "Follow package standards (Debian Policy, RPM Guidelines)",
+    "Validate with lintian (deb) and rpmlint (rpm)",
+    "Sort files for deterministic builds",
+    "Validate package metadata",
+    "Clear error messages with context"
+  ],
+  "antiPatterns": [
+    "Non-deterministic builds",
+    "Invalid metadata",
+    "Missing validation"
+  ]
+}

@@ -1,0 +1,82 @@
+# xpack Core Rules for Cursor IDE
+
+## Project Context
+
+**xpack** - Universal Linux Package Builder (Go CLI tool)
+
+## Mandatory Workflows
+
+```bash
+go build -o xpack src/Core/main.go
+go test ./...
+go fmt ./...
+go vet ./...
+```
+
+## Definition of "Done"
+
+- ✅ `go build` passes
+- ✅ Tests pass
+- ✅ Packages validate (lintian/rpmlint)
+- ✅ Reproducible builds
+- ✅ Docs updated
+
+## Architecture
+
+```
+src/ (Core, base, packager) → Build → Validate → dist/
+```
+
+## Go Standards
+
+### Errors
+```go
+// ✅ Descriptive
+if err != nil {
+    return fmt.Errorf("failed to create package '%s': %w", name, err)
+}
+```
+
+### Types
+```go
+// ✅ Use structs
+type PackageMetadata struct {
+    Name    string
+    Version string
+}
+```
+
+## Key Patterns
+
+### Reproducible
+```go
+// ✅ Sort files
+sort.Strings(files)
+```
+
+### Validate
+```go
+// ✅ Check names
+if !regexp.MustCompile(`^[a-z0-9][a-z0-9+.-]+$`).MatchString(name) {
+    return fmt.Errorf("invalid name")
+}
+```
+
+## Package Standards
+
+- Debian: Control file, /usr/bin
+- RPM: Spec file, /usr/bin
+- Tarball: Unix layout
+
+## Anti-Patterns
+
+❌ Non-deterministic builds
+❌ Invalid metadata
+❌ Missing validation
+
+## Success
+
+- ✅ Builds
+- ✅ Tests pass
+- ✅ Validates
+- ✅ Reproducible

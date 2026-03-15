@@ -1,0 +1,31 @@
+# OpenAI Codex CLI Configuration for xpack
+
+[project]
+name = "xpack"
+description = "Universal Linux Package Builder"
+language = "Go"
+
+[model]
+default = "gpt-4-turbo"
+temperature = 0.2
+
+[build]
+command = "go build -o xpack src/Core/main.go"
+required = true
+
+[test]
+command = "go test ./..."
+required = true
+
+[rules]
+reproducible_builds = true
+package_standards = true
+validate_packages = true
+
+[completion]
+required = [
+  "go build passes",
+  "go test passes",
+  "Packages validate",
+  "Reproducible builds"
+]
