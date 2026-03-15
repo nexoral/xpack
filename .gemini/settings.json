@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "project": {
+    "name": "xpack",
+    "type": "CLI Tool",
+    "language": "Go"
+  },
+  "model": {
+    "name": "gemini-3-pro",
+    "temperature": 0.2
+  },
+  "context": {
+    "fileName": ["GEMINI.md"]
+  }
+}
